@@ -1,25 +1,75 @@
-# Final Year Project - Document Digitizer
+# Document Digitizer
 
-## Project Overview
+An OCR-powered web application for digitizing scanned documents, extracting text, translating regional languages, and exporting the results into multiple document formats.
 
-This project aims to digitize and convert handwritten, old registered documents into a readable and accessible format in regional languages improving public access and readability of historical records.
+## Features
 
-## Team Members
-
-- **Charankumar E G D**
-- **Arunprasad S**
-- **Dharani Dharan R**
-
-**Mentor:** Mrs. A. Sangeetha  
-**Institution:** PSNA College of Engineering and Technology  
-**Department:** Information Technology
+- **Document Upload:** Upload scanned documents in PDF, PNG, JPG, and JPEG formats.
+- **Text Extraction:** Extract text from documents using Tesseract OCR.
+- **PDF Processing:** Process multi-page PDF documents and combine extracted text.
+- **Regional Language Support:** Work with multiple Indian languages and scripts, including Tamil, Hindi, Telugu, Kannada, Malayalam, Bengali, Gujarati, Odia, Punjabi, and Urdu.
+- **Text Translation:** Translate extracted content between supported languages using Google Translate integration.
+- **Document Editing:** Review and edit extracted or translated text through an interactive editor.
+- **Multi-format Export:** Download processed content as TXT, PDF, or DOCX files.
+- **Indic Font Support:** Use bundled Noto fonts to support regional scripts in exported documents.
+- **User Authentication:** Manage access to application pages through Clerk authentication.
 
 ## Technology Stack
 
-- **Frontend:** React.js (Vite), Tailwind CSS, Typescript
-- **Backend:** Python (Flask)
-- **OCR Engine:** Tesseract OCR
-- **Translation:** Google Translate
+**Frontend**
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Clerk
+
+**Backend**
+- Python
+- Flask
+- Tesseract OCR
+- OpenCV
+- Googletrans
+- FPDF
+- python-docx
+
+## Project Structure
+
+```text
+document-digitizer/
+├── code/
+│   ├── backend/
+│   │   ├── app.py
+│   │   ├── requirements.txt
+│   │   ├── fonts/
+│   │   ├── assets/
+│   │   └── services/
+│   │       ├── document_processor.py
+│   │       ├── image_preprocessor.py
+│   │       ├── preprocess_image.py
+│   │       ├── ocr_processor.py
+│   │       ├── text_translator.py
+│   │       ├── text_postprocessor.py
+│   │       └── document_converter.py
+│   │
+│   └── frontend/
+│       ├── public/
+│       ├── src/
+│       │   ├── components/
+│       │   ├── pages/
+│       │   ├── sections/
+│       │   ├── services/
+│       │   │   └── api.ts
+│       │   └── markdowns/
+│       ├── .env.example
+│       ├── package.json
+│       └── vite.config.ts
+│
+├── review/
+├── niral_thiruvizha/
+└── README.md
+```
+
+## Getting Started
 
 ## Prerequisites
 
@@ -40,81 +90,113 @@ You can install them as follows:
    - **MacOS:** `brew install poppler`
    - **Windows:** [Install Poppler on Windows](http://blog.alivate.com.au/poppler-windows/)
 
-## Installation
 
-Follow the steps below to set up the project locally.
+### 1. Backend Setup
 
-### 1. Clone the repository:
-
-```sh
-git clone https://github.com/charankumaregd/final_year_project.git
-```
-
-### 2. Navigate to the project folder:
-
-```sh
-cd final_year_project/code
-```
-
-### 3. Install frontend dependencies:
-
-```sh
-cd frontend
-npm install
-```
-
-### 4. Create the virtual environment for backend:
+Navigate to the backend directory:
 
 ```bash
-cd backend
-python -m venv .venv
+cd code/backend
 ```
 
-### 5. Activate the virtual environment
+Create and activate a Python virtual environment:
 
 ```bash
-.venv\Scripts\Activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-### 6. Install backend dependencies:
+On Windows, activate it using:
 
-```sh
+```bash
+.venv\Scripts\activate
+```
+
+Install the Python dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-### 7. Set up the environment variables:
-
-**For frontend:** Copy the `.env.example` file to `.env` inside the `frontend` folder and configure the necessary environment variables.
-
-```sh
-cd frontend
-cp .env.example .env
-```
-
-### 8. To test run individual modules in backend:
+Start the Flask server:
 
 ```bash
-cd backend
-python -m <package_name>.<module_name>
-```
-
-### 9. Start the backend server:
-
-```sh
-cd backend
 flask run
 ```
 
-### 10. Start the frontend:
+The backend runs at:
 
-```sh
-cd frontend
+```text
+http://localhost:5000
+```
+
+### 2. Frontend Setup
+
+Open another terminal and navigate to the frontend directory:
+
+```bash
+cd code/frontend
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Create an environment file:
+
+```bash
+cp .env.example .env
+```
+
+Configure the required environment variables:
+
+```env
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+VITE_CLERK_SIGN_IN_URL=/login
+VITE_CLERK_SIGN_UP_URL=/register
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
+Replace the Clerk publishable key with your own Clerk application key.
+
+Start the frontend development server:
+
+```bash
 npm run dev
 ```
 
-## Usage
+Open the local URL displayed in the terminal, typically:
 
-- Upload scanned or handwritten documents.
-- Extract text using OCR.
-- Translate the extracted text into regional languages.
-- Download or share the processed document.
+```text
+http://localhost:5173
+```
+
+## Application Workflow
+
+1. Upload a scanned document or PDF.
+2. Select the source language or use automatic language detection.
+3. Extract text using the OCR processing pipeline.
+4. Review and edit the extracted content in the document editor.
+5. Select a target language to translate the text if required.
+6. Export the final content as TXT, PDF, or DOCX.
+
+## Backend API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | Backend health check |
+| POST | `/api/extract` | Extract text from an uploaded document |
+| POST | `/api/translate` | Translate extracted text |
+| POST | `/api/convert` | Convert text into TXT, PDF, or DOCX |
+
+## Implementation Notes
+
+- The backend uses Tesseract OCR for text extraction.
+- PDF documents are converted into images using Poppler before OCR processing.
+- Googletrans is used for translation.
+- Noto fonts are bundled to support regional language scripts in exported documents.
+- Image preprocessing experiments are available in `preprocess_image.py`; the current `image_preprocessor.py` implementation does not yet integrate those processing techniques.
+- The application uses a Flask REST API to connect the frontend and backend.
+
