@@ -69,6 +69,42 @@ document-digitizer/
 └── README.md
 ```
 
+## Application Screenshots
+
+The following screenshots showcase the application's interface and workflow, from the landing page and document upload to text extraction, editing, translation, and document export.
+
+### 1. Home Page
+
+![Home Page](review/1/assets/images/workflow/01-home-page.png)
+
+### 2. Document Upload
+
+![Document Upload](review/1/assets/images/workflow/02-document-upload.png)
+
+### 3. File Selection
+
+![File Selection](review/1/assets/images/workflow/03-file-selection.png)
+
+### 4. Language Selection
+
+![Language Selection](review/1/assets/images/workflow/04-language-selection.png)
+
+### 5. Text Extraction
+
+![Text Extraction](review/1/assets/images/workflow/05-text-extraction.png)
+
+### 6. Text Editing
+
+![Text Editing](review/1/assets/images/workflow/06-text-editing.png)
+
+### 7. Text Translation
+
+![Text Translation](review/1/assets/images/workflow/07-text-translation.png)
+
+### 8. Document Download
+
+![Document Download](review/1/assets/images/workflow/08-document-download.png)
+
 ## Getting Started
 
 ## Prerequisites
